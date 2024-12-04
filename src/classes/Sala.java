@@ -22,4 +22,8 @@ public class Sala {
 		String msg = "Sala cadastrada com sucesso!";
 				return msg;
 	 }
+	public void setIdentificacao(String text) {
+		// TODO Auto-generated method stub
+		
+	}
 }

@@ -6,6 +6,7 @@ import java.awt.Font;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Date;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -20,6 +21,8 @@ import classes.Aulas;
 import classes.Curso;
 import classes.Professor;
 import classes.Sala;
+import javax.swing.ImageIcon;
+import java.awt.Toolkit;
 
 public class TelaAulas extends JFrame {
 
@@ -36,26 +39,29 @@ public class TelaAulas extends JFrame {
 	private JTextField txtCpfProfessor;
 	private JTextField txtNomeAluno;
 	private JTextField txtEmailAluno;
+	private JTextField txtCpfAluno;
+	private JTextField txtIdade;
 	private JTextField txtIdAula;
-	private JTextField textField_12;
-	private JTextField textField_13;
 	private JTextField txtCurso;
 	private JTextField txtProfessor;
 	private JTextField txtInicio;
-	private JTextField txtTermino;
 	private JTextField txtSala;
 	
-	//Declaração dos item para criar uma aula
+	//Descrição dos item para crira uma aula
+	
 	
 	private Curso curso;
 	private Aluno aluno;
 	private Sala sala;
 	private Professor professor;
 	private Aulas aulas;
+	private list<Aluno> listaAluno;
+	
+	
 	
 
 	/**
-	 * Launch the application.
+	 * Launch the application. /
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -74,15 +80,18 @@ public class TelaAulas extends JFrame {
 	 * Create the frame.
 	 */
 	public TelaAulas() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\ana.bbsouza4\\Downloads\\Umar123-Mantra-Colors.32.png"));
 		
 		//Vamos instaciar as nossas classe para gerar
 		//objetos dos itens relacionados a aula.
 		//Estes objetos estão vazio e serãprencidops quando o
 		//usuario clicar nos botois de incluir
-		curso = new Curso();
-		aluno = new Aluno();
-		sala = new Sala();
-		professor = new Professor();
+			curso = new Curso();
+			aluno = new Aluno();
+			sala = new Sala();
+			professor = new Professor();
+			aulas = new Aulas();
+				
 		
 		
 		setResizable(false);
@@ -270,10 +279,10 @@ public class TelaAulas extends JFrame {
 		lblIdade.setBounds(472, 66, 66, 14);
 		panel_aluno.add(lblIdade);
 		
-		textField_12 = new JTextField();
-		textField_12.setColumns(10);
-		textField_12.setBounds(548, 63, 247, 20);
-		panel_aluno.add(textField_12);
+		txtIdade = new JTextField();
+		txtIdade.setColumns(10);
+		txtIdade.setBounds(548, 63, 247, 20);
+		panel_aluno.add(txtIdade);
 		
 		JPanel panel_aulas = new JPanel();
 		panel_aulas.setBackground(new Color(255, 255, 255));
@@ -286,10 +295,10 @@ public class TelaAulas extends JFrame {
 		lblNewLabel_1.setBounds(10, 11, 169, 14);
 		panel_aulas.add(lblNewLabel_1);
 		
-		textField_13 = new JTextField();
-		textField_13.setBounds(96, 9, 120, 20);
-		panel_aulas.add(textField_13);
-		textField_13.setColumns(10);
+		txtIdAula = new JTextField();
+		txtIdAula.setBounds(96, 9, 120, 20);
+		panel_aulas.add(txtIdAula);
+		txtIdAula.setColumns(10);
 		
 		JLabel lblNewLabel_2 = new JLabel("Curso:");
 		lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 12));
@@ -326,7 +335,7 @@ public class TelaAulas extends JFrame {
 		lblNewLabel_1_1_1.setBounds(238, 48, 169, 14);
 		panel_aulas.add(lblNewLabel_1_1_1);
 		
-		txtTermino = new JTextField();
+		JTextField txtTermino = new JTextField();
 		txtTermino.setColumns(10);
 		txtTermino.setBounds(302, 46, 120, 20);
 		panel_aulas.add(txtTermino);
@@ -336,85 +345,137 @@ public class TelaAulas extends JFrame {
 		lblNewLabel_1_1_1_1.setBounds(440, 49, 169, 14);
 		panel_aulas.add(lblNewLabel_1_1_1_1);
 		
-		JComboBox cboAlunos = new JComboBox();
-		cboAlunos.setBounds(533, 48, 262, 17);
-		panel_aulas.add(cboAlunos);
+		JComboBox cboAluno = new JComboBox();
+		cboAluno.setBounds(533, 48, 262, 17);
+		panel_aulas.add(cboAluno);
 		
-		JLabel lblNewLabel_1_1_2 = new JLabel("Sala:");
+		JLabel lblNewLabel_1_1_2 = new JLabel("Sala");
 		lblNewLabel_1_1_2.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblNewLabel_1_1_2.setBounds(10, 81, 169, 14);
+		lblNewLabel_1_1_2.setBounds(10, 75, 169, 14);
 		panel_aulas.add(lblNewLabel_1_1_2);
 		
 		txtSala = new JTextField();
 		txtSala.setColumns(10);
-		txtSala.setBounds(96, 79, 120, 20);
+		txtSala.setBounds(96, 73, 120, 20);
 		panel_aulas.add(txtSala);
 		
 		JButton btnIncluirCurso = new JButton("Incluir curso");
+		btnIncluirCurso.setIcon(new ImageIcon("C:\\Users\\ana.bbsouza4\\Downloads\\Bogo-D-Project-Emoticon.32.png"));
 		btnIncluirCurso.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//obter o texto que está na caixa de titulo do curso e
-				// adicionar á caixa curso que esta na Área do Criar aula
+				
+				//Obter o texto que está na caixa de titulo do curso e 
+				//adicionar à caixa curso que está na área do Criar Aula
 				txtCurso.setText(txtTituloCurso.getText());
 				
-				
-				
-				
-				//Vamos desativar o panel de curso vamos usar
-				//o comando enabled com o valor false
+				//Vamos desativar o painel de cursos. Vamos usar
+				// o comando enabled(habilitar) com o valor false
 				txtTituloCurso.setEnabled(false);
 				txtArea.setEnabled(false);
 				txtCargaHoraria.setEnabled(false);
 				txtPrecoCurso.setEnabled(false);
+				
+				btnIncluirCurso.setEnabled(false);
 			}
 		});
-		btnIncluirCurso.setBounds(10, 510, 141, 23);
+		btnIncluirCurso.setBounds(20, 510, 151, 34);
 		contentPane.add(btnIncluirCurso);
 		
 		JButton btnIncluirSala = new JButton("Incluir sala");
+		btnIncluirSala.setIcon(new ImageIcon("C:\\Users\\ana.bbsouza4\\Downloads\\Bogo-D-Project-Color-Wheel.32.png"));
 		btnIncluirSala.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
 				
+				//Prencher os dados do objeto sala
+				sala.setIdentificacao(txtIdentificacao.getText());
+				sala.setDescricao(txtDescricao.getText());
+				
+				
+				
+				
+				txtSala.setText(txtIdentificacao.getText());
+				
 				btnIncluirSala.setEnabled(false);
 				txtIdentificacao.setEnabled(false);
 				txtDescricao.setEnabled(false);
-				txtEmailProfessor.setEnabled(false);
-				txtCpfProfessor.setEnabled(false);
-				txtSala.setText(txtSala.getText());
+				
 			}
 		});
-		btnIncluirSala.setBounds(161, 510, 141, 23);
+		btnIncluirSala.setBounds(181, 510, 141, 34);
 		contentPane.add(btnIncluirSala);
 		
 		JButton btnIncluirProfessor = new JButton("Incluir professor");
+		btnIncluirProfessor.setIcon(new ImageIcon("C:\\Users\\ana.bbsouza4\\Downloads\\Bogo-D-Project-Filetype.32.png"));
 		btnIncluirProfessor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//obter o texto que está na caixa do Professor  e
-				// adicionar á caixa professor que esta na Área do Criar aula
-				txtProfessor.setText(txtProfessor.getText());
 				
 				
+				professor.setNome(txtNomeProfessor.getText());
+				professor.setEmail(txtEmailProfessor.getText());
+				professor.setCpf(txtCpfProfessor.getText());
+				
+				txtProfessor.setText(txtNomeProfessor.getText());
+				
+				txtNomeProfessor.setEnabled(false);
+				txtEmailProfessor.setEnabled(false);
+				txtCpfProfessor.setEnabled(false);
 				
 				btnIncluirProfessor.setEnabled(false);
-				txtNomeProfessor.setEnabled(false);
-				
 			}
 		});
-		btnIncluirProfessor.setBounds(312, 510, 141, 23);
+		btnIncluirProfessor.setBounds(332, 510, 141, 34);
 		contentPane.add(btnIncluirProfessor);
 		
 		JButton btnIncluirAluno = new JButton("Incluir aluno");
+		btnIncluirAluno.setIcon(new ImageIcon("C:\\Users\\ana.bbsouza4\\Downloads\\Bogo-D-Project-Get-Info.32.png"));
 		btnIncluirAluno.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				cboAlunos.addItem(txtNomeAlunos.getText());
+				
+				aluno.setNome(txtNomeAluno.getText());
+				aluno.setEmail(txtEmailAluno.getText());
+				aluno.setCpf(txtCpfAluno.getText());
+				aluno.setIdade(Integer.parseInt(txtIdade.getText()));
+				listaAluno.add(aluno);
+				
+				
+				
+				cboAluno.addItem(txtNomeAluno.getText());
+				
 			}
 		});
-		btnIncluirAluno.setBounds(463, 510, 141, 23);
+		btnIncluirAluno.setBounds(483, 510, 141, 34);
 		contentPane.add(btnIncluirAluno);
 		
-		JButton btnCriarAula = new JButton("Criar a Aula");
-		btnCriarAula.setBounds(625, 510, 141, 23);
-		contentPane.add(btnCriarAula);
+		JButton btnCriarSala = new JButton("Criar a Aula");
+		btnCriarSala.setIcon(new ImageIcon("C:\\Users\\ana.bbsouza4\\Downloads\\Bogo-D-Project-Aero-Window-Explorer.32.png"));
+		btnCriarSala.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				aulas.setId(Integer.parseInt(txtIdAula.getText()));
+				aulas.setCurso(curso);
+				aulas.setProfessor(professor);
+				
+				aulas.setInicio(new Date(Long.parseLong(txtInicio.getText())));
+				aulas.setTermino(new Date(Long.parseLong(txtTermino.getText())));
+				
+				
+				aulas.setAlunos((Aluno[]) listaAluno.toArray());
+				aulas.setSala(sala);
+				
+				
+				txtIdAula.setEnabled(false);
+				txtCurso.setEnabled(false);
+				txtProfessor.setEnabled(false);
+				txtInicio.setEnabled(false);
+				txtTermino.setEnabled(false);
+				txtSala.setEnabled(false);
+				
+				
+				
+				System.out.print(cboAluno.getItemAt(0));
+			}
+		});
+		btnCriarSala.setBounds(634, 510, 141, 34);
+		contentPane.add(btnCriarSala);
 	}
 }
